@@ -11,9 +11,9 @@ import UIKit
 class BHConversation: NSObject {
     var lender_id:String!
     var borrower_id:String!
-    var messages:NSMutableArray!
     var displayImageUrl:String!
     var user_id:String!
+    var lastMessage:BHMessage!
     
     init(lender_id:String, borrower_id:String, user_id:String) {
         // set required variables
@@ -32,6 +32,5 @@ class BHConversation: NSObject {
         }
         
         // init messages array
-        self.messages = NSMutableArray()
     }
 }

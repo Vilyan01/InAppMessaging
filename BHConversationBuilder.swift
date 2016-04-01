@@ -23,6 +23,9 @@ class BHConversationBuilder: NSObject {
             if response.statusCode == 200 {
                 do {
                     let convs = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves) as! NSArray
+                    for conv in convs {
+                        
+                    }
                     
                 }
                 catch let error as NSError {
