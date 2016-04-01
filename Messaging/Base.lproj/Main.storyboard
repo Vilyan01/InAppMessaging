@@ -76,7 +76,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessagCell" rowHeight="75" id="Qpd-kL-5VI" customClass="BHMessagingTableViewCell" customModule="Messaging" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="75" id="Qpd-kL-5VI" customClass="BHMessagingTableViewCell" customModule="Messaging" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qpd-kL-5VI" id="MFH-S3-2CD">
@@ -132,7 +132,7 @@
                             <outlet property="delegate" destination="G5y-tr-voA" id="50N-xN-bvM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="rro-rJ-sHa"/>
+                    <navigationItem key="navigationItem" title="Messages" id="rro-rJ-sHa"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1E1-ib-5rY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
