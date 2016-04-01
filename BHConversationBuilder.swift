@@ -13,7 +13,7 @@ class BHConversationBuilder: NSObject {
     var delegate:BHConversationBuilderDelegate!
     
     /*
-    Get's a conversation from the server based on the user ID.  It's static so no object will need to be created.  You just call it as some_array = BHConversationBuilder.getUserConversations("124124124") or whatever the user ID You want conversations for is and it will return a formatted array of all conversations
+    Get's a conversation from the server based on the user ID.  You call this function on an instance and when it gets the required information it will display it will call the delegate function passing the information back to it's delegate
      */
     func getUserConversations(user_id:String) {
         // initialize empty array
@@ -41,6 +41,7 @@ class BHConversationBuilder: NSObject {
                     // Loop through the conversations and create a BHConversation object out of each of the conversations
                     // that we can pass to the TableViewController to display
                     for conv in convs {
+                        let conversation_id:String = String(conv.valueForKey("id"))
                         let lender_id:String = conv.valueForKey("lender_id") as! String
                         let borrower_id:String = conv.valueForKey("borrower_id") as! String
                         let msg = conv.valueForKey("last_message") as! NSDictionary
@@ -55,7 +56,7 @@ class BHConversationBuilder: NSObject {
                         // now that we have all the data returned from our response we can create the object
                         // instance and save it to the array
                         let last_message = BHMessage(body: msg_body, sender_id: msg_sender_id, sent_at: msg_sent_at!)
-                        let conversation = BHConversation(lender_id: lender_id, borrower_id: borrower_id, user_id: user_id)
+                        let conversation = BHConversation(lender_id: lender_id, borrower_id: borrower_id, user_id: user_id, conversation_id: conversation_id)
                         conversation.lastMessage = last_message
                         // add it to the array
                         arr.addObject(conversation)
