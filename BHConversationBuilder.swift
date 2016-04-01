@@ -10,16 +10,14 @@ import UIKit
 
 class BHConversationBuilder: NSObject {
     
+    var delegate:BHConversationBuilderDelegate!
+    
     /*
     Get's a conversation from the server based on the user ID.  It's static so no object will need to be created.  You just call it as some_array = BHConversationBuilder.getUserConversations("124124124") or whatever the user ID You want conversations for is and it will return a formatted array of all conversations
      */
-    static func getUserConversations(user_id:String) -> NSMutableArray {
+    func getUserConversations(user_id:String) {
         // initialize empty array
         let arr = NSMutableArray()
-        // boolean variable used for blocking since synchronous responses are frowned upon 
-        // but we NEED the data before continuing.  There may be a more graceful way to handle
-        // this but in the mean time we can just use this
-        var done = false
         // The session is used to communicate between the app and the server using HTTP Requests
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         // Creates a task using the session using a URL from the Strings.swift file (which will not be included in the future
@@ -45,8 +43,25 @@ class BHConversationBuilder: NSObject {
                     for conv in convs {
                         let lender_id:String = conv.valueForKey("lender_id") as! String
                         let borrower_id:String = conv.valueForKey("borrower_id") as! String
+                        let msg = conv.valueForKey("last_message") as! NSDictionary
+                        let msg_body = msg.valueForKey("body") as! String
+                        let msg_sender_id = msg.valueForKey("sender_id") as! String
+                        let msg_sent_at_string = msg.valueForKey("created_at") as! String
+                        // We need to convert the date from a ruby date to a NSDate.  For that we will use NSDateFormatter
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+                        // We can now use this formatter to convert the date from a string to an NSDate
+                        let msg_sent_at = dateFormatter.dateFromString(msg_sent_at_string)
+                        // now that we have all the data returned from our response we can create the object
+                        // instance and save it to the array
+                        let last_message = BHMessage(body: msg_body, sender_id: msg_sender_id, sent_at: msg_sent_at!)
+                        let conversation = BHConversation(lender_id: lender_id, borrower_id: borrower_id, user_id: user_id)
+                        conversation.lastMessage = last_message
+                        // add it to the array
+                        arr.addObject(conversation)
                     }
-                    
+                    // Now that it's finished, we can send it back to the parent view controller via the delegate method.
+                    self.delegate.didFinishRetrievingMessages(arr)
                 }
                 // catch any errors thrown by the try block up above and print them out.
                 catch let error as NSError {
@@ -58,17 +73,13 @@ class BHConversationBuilder: NSObject {
                 // be used to debug using the server's logs to find where the request went wrong.
                 print("Incorrect status code: \(response.statusCode)")
             }
-            // Set that done variable to true so that it can continue on with it's functionality.
-            done = true
         })
         // This is what starts the task.  It may seem kind of out of order, but once you get the hang
         // of how completion handlers work it will make more sense.
         task.resume()
-        // This will cause the function to just continuously do nothing on the main thread while the request
-        // is being handled.
-        while (!done) {
-        }
-        // Finally, return the array of conversations to be passed to the TableViewController
-        return arr
     }
+}
+
+protocol BHConversationBuilderDelegate {
+    func didFinishRetrievingMessages(messages:NSMutableArray)
 }

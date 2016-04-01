@@ -70,7 +70,7 @@
         <!--Contacts-->
         <scene sceneID="sEj-kn-uUu">
             <objects>
-                <tableViewController title="Contacts" id="G5y-tr-voA" sceneMemberID="viewController">
+                <tableViewController title="Contacts" id="G5y-tr-voA" customClass="BHMessagingTableViewController" customModule="Messaging" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" id="Y8Z-Jl-Epk">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

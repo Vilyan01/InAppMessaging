@@ -10,11 +10,18 @@ import UIKit
 
 class BHMessagingTableViewController: UITableViewController {
     
-    var conversations:NSArray!
+    var conversations:NSArray = NSMutableArray()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // Start by creating an instance of BHConversationBuilder
+        let builder = BHConversationBuilder()
+        // We will set the delegate as self so the builder knows which object to return the data to.
+        // The actual implementation of the delegate methods are below in the first extension.
+        builder.delegate = self
+        // Now we start the request and if all goes well it will retrieve the data and update the table view.
+        // As of right now since this is just an example, I'm using some seeded data on the localhost server.
+        builder.getUserConversations("10101812792890508")
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,59 +31,26 @@ class BHMessagingTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        // We only want one section in the table.
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        // This is where we will set the value equal to conversations.count -- this will ensure we have
+        // one cell for each of the conversatios in store
+        return conversations.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell", forIndexPath: indexPath) as! BHMessagingTableViewCell
 
         // Configure the cell...
 
         return cell
     }
-    */
+ 
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
@@ -87,5 +61,18 @@ class BHMessagingTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+/*
+ Here is where we will handle the delegate method.  We will perform the request and when it is finished, update the array and
+*/
+// MARK: -BHConversationBuilderDelegate
+extension BHMessagingTableViewController : BHConversationBuilderDelegate {
+    func didFinishRetrievingMessages(messages: NSMutableArray) {
+        // the request is finished and this will now be called.  We need to set the conversations array as the messages
+        // returned from this function and reload the tableview
+        //self.conversations = messages
+        print(messages.count)
+        self.tableView.reloadData()
+    }
 }
