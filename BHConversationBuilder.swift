@@ -91,8 +91,45 @@ class BHConversationBuilder: NSObject {
         // repetition in the future.
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let task = session.dataTaskWithURL(NSURL(string:"\(BASE_CONVERSATION_URL)/\(conversation_id)/messages")!) { (data, resp, err) in
-            
+            // Check for error!
+            if err != nil {
+                print("Error getting messages for conversation: \(err?.localizedDescription)")
+            }
+            // Convert to NSHTTPURLResponse for the statusCode
+            let response = resp as! NSHTTPURLResponse
+            if response.statusCode == 200 {
+                // Successful request, parse the data into messages and add them to the array
+                do {
+                    let msgs = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves) as! NSArray
+                    for msg in msgs {
+                        let sender_id = msg.valueForKey("sender_id") as! String
+                        let body = msg.valueForKey("body") as! String
+                        let sent_at_string = msg.valueForKey("created_at") as! String
+                        // Use date formatter to convert again.  This is also something that can probably be
+                        // abstracted outside of the function to be used in both.
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+                        let sent_at = dateFormatter.dateFromString(sent_at_string)
+                        // Create a message instance and store it in the array
+                        let message = BHMessage(body: body, sender_id: sender_id, sent_at: sent_at!)
+                        arr.addObject(message)
+                    }
+                    // It has all the data needed now.  Time to call the delegate method to return it to
+                    // the delegate class.
+                    self.delegate.didFinishRetrievingIndividualConversation!(arr)
+                }
+                catch let error as NSError {
+                    // There was an error parsing the JSON.  Print it out.
+                    print("Error parsing JSON while getting conversation: \(error.localizedDescription)")
+                }
+            }
+            else {
+                // Print the status code for debugging purposes
+                print("Unexpected status code: \(response.statusCode)")
+            }
         }
+        // Start the task
+        task.resume()
     }
 }
 
