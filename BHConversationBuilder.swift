@@ -62,7 +62,7 @@ class BHConversationBuilder: NSObject {
                         arr.addObject(conversation)
                     }
                     // Now that it's finished, we can send it back to the parent view controller via the delegate method.
-                    self.delegate.didFinishRetrievingMessages(arr)
+                    self.delegate.didFinishRetrievingMessages!(arr)
                 }
                 // catch any errors thrown by the try block up above and print them out.
                 catch let error as NSError {
@@ -79,8 +79,21 @@ class BHConversationBuilder: NSObject {
         // of how completion handlers work it will make more sense.
         task.resume()
     }
+    
+    /*
+     Gets an individual conversation with all messages related to that conversation.  It is also called
+     from an instance of the BHConversationBuilder class.
+    */
+    func getIndividualConversation(conversation_id:String) {
+        // Initialize an array to hold all the messages in.
+        let arr = NSMutableArray()
+        // Initialize a session.  This can probably be pulled outside as a class level variable to save on code
+        // repetition in the future.
+        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+    }
 }
 
-protocol BHConversationBuilderDelegate {
-    func didFinishRetrievingMessages(messages:NSMutableArray)
+@objc protocol BHConversationBuilderDelegate {
+    optional func didFinishRetrievingMessages(messages:NSMutableArray)
+    optional func didFinishRetrievingIndividualConversation(conversation:NSMutableArray)
 }

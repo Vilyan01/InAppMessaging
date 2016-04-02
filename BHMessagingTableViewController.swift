@@ -21,7 +21,7 @@ class BHMessagingTableViewController: UITableViewController {
         builder.delegate = self
         // Now we start the request and if all goes well it will retrieve the data and update the table view.
         // As of right now since this is just an example, I'm using some seeded data on the localhost server.
-        builder.getUserConversations("10101812792890508")
+        builder.getUserConversations(SAMPLE_USER_ID)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +60,7 @@ class BHMessagingTableViewController: UITableViewController {
         let last_message = conversation.lastMessage
         // We can add the "You:" to the beginning like facebook messager by checking the sender_id of the last
         // message to our ID.
-        if last_message.sender_id == "10101812792890508" {
+        if last_message.sender_id == SAMPLE_USER_ID {
             cell.lastMessage.text = "You: \(last_message.body)"
         }
         else {
