@@ -90,6 +90,9 @@ class BHConversationBuilder: NSObject {
         // Initialize a session.  This can probably be pulled outside as a class level variable to save on code
         // repetition in the future.
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        let task = session.dataTaskWithURL(NSURL(string:"\(BASE_CONVERSATION_URL)/\(conversation_id)/messages")!) { (data, resp, err) in
+            
+        }
     }
 }
 
