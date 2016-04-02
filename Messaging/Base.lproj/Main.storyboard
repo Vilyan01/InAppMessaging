@@ -133,10 +133,32 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Messages" id="rro-rJ-sHa"/>
+                    <connections>
+                        <segue destination="2L8-Jc-4sP" kind="show" identifier="ShowConversation" id="Bxe-FY-hYl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1E1-ib-5rY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1242" y="176"/>
+        </scene>
+        <!--Message View Controller-->
+        <scene sceneID="PQs-2y-8CU">
+            <objects>
+                <viewController id="2L8-Jc-4sP" customClass="MessageViewController" customModule="Messaging" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fRG-Z8-v5e"/>
+                        <viewControllerLayoutGuide type="bottom" id="Unb-ha-5DA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9zh-tN-wEu">
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f3o-de-HFu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1969" y="176"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rE3-LS-EMF">

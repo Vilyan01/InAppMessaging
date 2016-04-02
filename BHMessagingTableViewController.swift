@@ -11,6 +11,7 @@ import UIKit
 class BHMessagingTableViewController: UITableViewController {
     
     var conversations:NSArray = NSMutableArray()
+    var convId:NSNumber!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,18 +78,35 @@ class BHMessagingTableViewController: UITableViewController {
         cell.timeStamp.text = dateFormatter.stringFromDate(last_message.sent_at)
         return cell
     }
+    
+    /*
+     This function will tell the application what to do when you tap on a cell.  In this instance we will want
+     to set the conversation to transfer to the next view controller to send in the prepareForSegue function and
+     then perform the segue itself.
+    */
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let conv = conversations.objectAtIndex(indexPath.row) as! BHConversation
+        self.convId = conv.conversation_id!
+        print("Conv.conversation_id: \(conv.conversation_id)")
+        print("Cid: \(self.convId)")
+        self.performSegueWithIdentifier("ShowConversation", sender: self)
+    }
  
 
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowConversation" {
+            let dst = segue.destinationViewController as! MessageViewController
+            dst.convId = self.convId
+            dst.senderId = SAMPLE_USER_ID
+            dst.senderDisplayName = "Test"
+        }
     }
-    */
+    
 }
 
 /*

@@ -41,12 +41,14 @@ class BHConversationBuilder: NSObject {
                     // Loop through the conversations and create a BHConversation object out of each of the conversations
                     // that we can pass to the TableViewController to display
                     for conv in convs {
-                        let conversation_id:String = String(conv.valueForKey("id"))
+                        let conversation_id:NSNumber = conv.valueForKey("id") as! NSNumber
+                        print("Got Conversation Id: \(conversation_id)")
                         let lender_id:String = conv.valueForKey("lender_id") as! String
                         let borrower_id:String = conv.valueForKey("borrower_id") as! String
                         let msg = conv.valueForKey("last_message") as! NSDictionary
                         let msg_body = msg.valueForKey("body") as! String
                         let msg_sender_id = msg.valueForKey("sender_id") as! String
+                        let msg_display_name = msg.valueForKey("display_name") as! String
                         let msg_sent_at_string = msg.valueForKey("created_at") as! String
                         // We need to convert the date from a ruby date to a NSDate.  For that we will use NSDateFormatter
                         let dateFormatter = NSDateFormatter()
@@ -55,7 +57,7 @@ class BHConversationBuilder: NSObject {
                         let msg_sent_at = dateFormatter.dateFromString(msg_sent_at_string)
                         // now that we have all the data returned from our response we can create the object
                         // instance and save it to the array
-                        let last_message = BHMessage(body: msg_body, sender_id: msg_sender_id, sent_at: msg_sent_at!)
+                        let last_message = BHMessage(body: msg_body, sender_id: msg_sender_id, sent_at: msg_sent_at!, display_name: msg_display_name)
                         let conversation = BHConversation(lender_id: lender_id, borrower_id: borrower_id, user_id: user_id, conversation_id: conversation_id)
                         conversation.lastMessage = last_message
                         // add it to the array
@@ -84,7 +86,7 @@ class BHConversationBuilder: NSObject {
      Gets an individual conversation with all messages related to that conversation.  It is also called
      from an instance of the BHConversationBuilder class.
     */
-    func getIndividualConversation(conversation_id:String) {
+    func getIndividualConversation(conversation_id:NSNumber) {
         // Initialize an array to hold all the messages in.
         let arr = NSMutableArray()
         // Initialize a session.  This can probably be pulled outside as a class level variable to save on code
@@ -105,13 +107,14 @@ class BHConversationBuilder: NSObject {
                         let sender_id = msg.valueForKey("sender_id") as! String
                         let body = msg.valueForKey("body") as! String
                         let sent_at_string = msg.valueForKey("created_at") as! String
+                        let display_name = msg.valueForKey("display_name") as! String
                         // Use date formatter to convert again.  This is also something that can probably be
                         // abstracted outside of the function to be used in both.
                         let dateFormatter = NSDateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
                         let sent_at = dateFormatter.dateFromString(sent_at_string)
                         // Create a message instance and store it in the array
-                        let message = BHMessage(body: body, sender_id: sender_id, sent_at: sent_at!)
+                        let message = BHMessage(body: body, sender_id: sender_id, sent_at: sent_at!, display_name: display_name)
                         arr.addObject(message)
                     }
                     // It has all the data needed now.  Time to call the delegate method to return it to

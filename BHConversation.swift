@@ -9,14 +9,14 @@
 import UIKit
 
 class BHConversation: NSObject {
-    var conversation_id:String!
+    var conversation_id:NSNumber!
     var lender_id:String!
     var borrower_id:String!
     var displayImageUrl:String!
     var user_id:String!
     var lastMessage:BHMessage!
     
-    init(lender_id:String, borrower_id:String, user_id:String, conversation_id:String) {
+    init(lender_id:String, borrower_id:String, user_id:String, conversation_id:NSNumber) {
         // set required variables
         self.lender_id = lender_id
         self.borrower_id = borrower_id
