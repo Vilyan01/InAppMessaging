@@ -21,6 +21,7 @@
 		88C252631CAF1241004A8B0C /* BHMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C252621CAF1241004A8B0C /* BHMessage.swift */; };
 		88C252661CAF1B81004A8B0C /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C252651CAF1B81004A8B0C /* Strings.swift */; };
 		88C2526A1CAF1CC0004A8B0C /* BHConversationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C252691CAF1CC0004A8B0C /* BHConversationBuilder.swift */; };
+		88C2526C1CAF48B4004A8B0C /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C2526B1CAF48B4004A8B0C /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		88C252621CAF1241004A8B0C /* BHMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHMessage.swift; sourceTree = "<group>"; };
 		88C252651CAF1B81004A8B0C /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		88C252691CAF1CC0004A8B0C /* BHConversationBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BHConversationBuilder.swift; sourceTree = "<group>"; };
+		88C2526B1CAF48B4004A8B0C /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				88C252651CAF1B81004A8B0C /* Strings.swift */,
+				88C2526B1CAF48B4004A8B0C /* Secrets.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C2525E1CAF113E004A8B0C /* BHMessagingTableViewController.swift in Sources */,
+				88C2526C1CAF48B4004A8B0C /* Secrets.swift in Sources */,
 				88C2525C1CAF0F92004A8B0C /* BHMessagingTableViewCell.swift in Sources */,
 				88C252661CAF1B81004A8B0C /* Strings.swift in Sources */,
 				88C2526A1CAF1CC0004A8B0C /* BHConversationBuilder.swift in Sources */,
